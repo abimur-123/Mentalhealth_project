@@ -6,7 +6,7 @@ In this analysis I look at mental health survey data of workers across the globe
 
 ## Dataset
 
-The dataset is obtained from a survey by [OSMI](https://osmihelp.org/)(Open Source Mental Illness). This survey was conducted in 2016 and had 1433 people responding to 63 questions. I was able to download this data from [Michael Rosenberg's](https://github.com/PLBMR) repository, as I could not find a way to encrypt the API key I obtained from data world, which also has the dataset. In the future I will be using the API provided by this site to download the data. Codebook containing variable descriptions can be found [here](https://github.com/abimur-123/Mentalhealth_project/blob/master/docs/Codebook.csv).
+The dataset is obtained from a survey by [OSMI](https://osmihelp.org/)(Open Source Mental Illness). This survey was conducted in 2016 and had 1433 people responding to 63 questions. I was able to download this data from [Michael Rosenberg's](https://github.com/PLBMR) repository, as I could not find a way to encrypt the API key I obtained from data world, which also has the dataset. In the future I will be using the API provided by this site to download the data. Codebook containing variable descriptions can be found [here](https://github.com/abimur-123/Mentalhealth_project/blob/master/docs/Codebook.csv). Steps to download the data can be found within the ```scripts``` folder.
 
 ## Hypothesis
 
