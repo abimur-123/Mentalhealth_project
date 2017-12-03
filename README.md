@@ -11,8 +11,8 @@ The dataset is obtained from a survey by [OSMI](https://osmihelp.org/)(Open Sour
 ## Hypothesis
 
 My hypothesis for this analysis is -
-- **Null hypothesis**: Tech companies are well equipped and are not responsible for mental illness among their employees.
-- **Alternate hypothesis**: Tech companies play a role in mental illness of workers and if so and do not provide employees adequate support to overcome this illness.
+- **Null hypothesis**: Tech companies are well equipped to handle mental illness among their employees.
+- **Alternate hypothesis**: Tech companies are not well equipped to handle mental illness among their employees.
 
 ## Why this analysis?
 
