@@ -1,0 +1,7 @@
+Bar graphs: For columns with Yes/no answers
+
+Possible table to show mean of values, distribution across the world
+
+What kind of analysis?
+> ANOVA to determine significance of certain questions
+> Tree to classify mental health of a person based on answers?
