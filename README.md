@@ -10,9 +10,7 @@ The dataset is obtained from a survey by [OSMI](https://osmihelp.org/)(Open Sour
 
 ## Hypothesis
 
-My hypothesis for this analysis is -
-- **Null hypothesis**: Tech companies are well equipped to handle mental illness among their employees.
-- **Alternate hypothesis**: Tech companies are not well equipped to handle mental illness among their employees.
+The hypothesis that I will be testing in this project is 'Are the tech companies doing enough to ensure mental wellbeing of their employees?'
 
 ## Why this analysis?
 
@@ -21,3 +19,32 @@ There is a boom in the number of startups in the tech industry, as well as growt
 ## Visualizing the dataset
 
 There are multiple questions regarding company policy towards mental illness which are simply have Yes/No/Maybe answers. This can be visualized by the use of a bar plot. Also looking at the relation between family history of mental illness might help determine the role of tech companies in mental health. Future implementation could include sentiment analysis on the comments of the employee and geographic aspect to this.
+
+## Running this analysis
+
+Steps to reproduce this analysis are -
+
+1. Clone the github repo or dowload files from the scripts folder to your local system.
+2. Navigate to the folder where the downloaded files are present and run the following commands in sequence:
+```
+python Data_import.py <<URL to obtain data from>> <<location to store raw file>>
+```
+URL I used to obtain data for this analysis is - 'https://query.data.world/s/S5I_aMQV9aJMq2_o3qMmrvOMru1Sss'
+
+The parameters are optional. If nothing is passed then the above URL is used by default and the raw data is stored in the data folder in the root directory.
+
+Run the following command after this -
+
+```
+python Data_cleansing.py <<Raw file location>> <<Destination for codebook>> <<Destination for cleansed data>> <<Destination for storing string summary table>> <<Desination for storing numeric summary table>>
+```
+
+These parameters are again optional, if you **did not** specify any parameters for the previous command. Default parameters are used in the absence of input parameters.
+
+Last python command -
+
+```
+python Data_eda.py <<cleansed file location>> <<codebook location>> <<destination folder for figures>>
+```
+
+The parameters in this case indicate location of cleansed file, codebook file and destination folder for saving images from analysis.The parameters are optional and default arguments are used if no arguments were specified in the previous instances.
