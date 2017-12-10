@@ -7,6 +7,6 @@ THe 3 scripts to run the analysis:
 
 Final report - **Final_report.Rmd**
 
-This script is depreciated - **Final_import.R**
+This script is will not be used starting this release - **Final_import.R**
 
 The Notebooks folder has 3 `ipython notebook` from which I obtain the `py` scripts
