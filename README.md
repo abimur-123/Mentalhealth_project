@@ -38,4 +38,4 @@ docker run --rm -v <<Location where folder was cloned>>:/home/mentalhealth_proje
 docker run --rm -v <<Location where folder was cloned>>:/home/mentalhealth_project abimurali/mentalhealth_project make -C '/home/mentalhealth_project'
 ```
 
-PS: Packrat can be used to install R packages required to run the code on your system
+PS: Packrat can be used to install R packages required to run the code on your system. Opening the `.Rproj` file should do this
