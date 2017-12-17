@@ -24,8 +24,8 @@ There are multiple questions regarding company policy towards mental illness whi
 
 Steps to reproduce this analysis are -
 
-1. Clone the github repo or dowload files from the scripts folder to your local system.
-2. Download image from Docker
+1. Clone the github repo or download files from the scripts folder to your local system.
+2. Download image from Docker(you need to have Docker on your system)
 ```
 docker pull abimurali/mentalhealth_project
 ```
@@ -37,3 +37,5 @@ docker run --rm -v <<Location where folder was cloned>>:/home/mentalhealth_proje
 ```
 docker run --rm -v <<Location where folder was cloned>>:/home/mentalhealth_project abimurali/mentalhealth_project make -C '/home/mentalhealth_project'
 ```
+
+PS: Packrat can be used to install R packages required to run the code on your system
