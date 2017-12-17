@@ -7,8 +7,7 @@
 # clean intermediate results
 clean:
 	rm -rf results/*
-	rm docs/Final_report.md
-	rm docs/Final_report.html
+	rm docs/Final_report.*
 	rm data/cleansed_data.csv
 
 # run from top to bottom
