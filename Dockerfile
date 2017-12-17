@@ -17,9 +17,15 @@ RUN apt-get update \
 # get python package dependencies
 RUN apt-get install -y python3-tk
 
-COPY requirements.txt ./
-RUN pip3 install --no-cache-dir -r requirements.txt
-
 RUN apt-get update && \
     pip3 install pandas && \
+    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    pip3 install numpy && \
+    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    pip3 install matplotlib && \
+    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    pip3 install seaborn && \
     rm -rf /var/lib/apt/lists/*
