@@ -33,7 +33,7 @@ def cleanse_data(raw_file,codebook_dest,cleansed_dest,str_summ_dest,num_summ_des
     '''
 
     # # Prepare codebook
-    fn = "../" + raw_file
+    fn = raw_file
     data = pd.read_csv(fn, encoding='latin-1')
     df = data.copy()
     df.columns = ['C'+ str(i + 1) for i in range(len(df.columns))] #encode column names with prefix 'C' followed by number
@@ -41,7 +41,7 @@ def cleanse_data(raw_file,codebook_dest,cleansed_dest,str_summ_dest,num_summ_des
     pd.options.display.max_rows = 65
     codebook = pd.DataFrame([dict(d)]).T.reset_index().rename(columns = {"index":"Old_names",0:"New_names"})
 
-    cb_fn = "../" + codebook_dest
+    cb_fn = codebook_dest
     di = cb_fn.rsplit('/',1)[0]
     if not os.path.exists(di):#checks if data directory exists, creates one otherwise
         os.makedirs(di)
@@ -98,7 +98,7 @@ def cleanse_data(raw_file,codebook_dest,cleansed_dest,str_summ_dest,num_summ_des
     # df.iloc[:,-np.where(a)[0]].head()
     # # Summary tables
 
-    str_fn = "../" + str_summ_dest
+    str_fn = str_summ_dest
     di = str_fn.rsplit('/',1)[0]
     if not os.path.exists(di):#checks if data directory exists, creates one otherwise
         os.makedirs(di)
@@ -106,7 +106,7 @@ def cleanse_data(raw_file,codebook_dest,cleansed_dest,str_summ_dest,num_summ_des
     string_sum = df.describe(include = [np.object])
     string_sum.to_csv(str_fn)
 
-    num_fn = "../" + num_summ_dest
+    num_fn = num_summ_dest
     di = num_fn.rsplit('/',1)[0]
     if not os.path.exists(di):#checks if data directory exists, creates one otherwise
         os.makedirs(di)
@@ -115,7 +115,7 @@ def cleanse_data(raw_file,codebook_dest,cleansed_dest,str_summ_dest,num_summ_des
     num_sum.to_csv(num_fn)
 
     # # Write cleansed data to file
-    clean_fn = "../" + cleansed_dest
+    clean_fn = cleansed_dest
     di = clean_fn.rsplit('/',1)[0]
     if not os.path.exists(di):#checks if data directory exists, creates one otherwise
         os.makedirs(di)

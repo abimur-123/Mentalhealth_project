@@ -23,7 +23,7 @@ def import_file(URL, output_file):
     '''
     df = pd.read_csv(URL) #URL obtained from https://data.world/kittybot/osmi-mental-health-tech-2016
 
-    fn = "../" + output_file # location of raw data file
+    fn = output_file # location of raw data file
     di = fn.rsplit('/',1)[0]
 
     if(df.shape[0] > 0):

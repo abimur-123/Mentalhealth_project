@@ -40,7 +40,7 @@ def plotBar(var, data,title,filename,directory):
     fig = bar_plot.get_figure()
 
     if(filename is not None):
-        di = "../" + directory
+        di = directory
         if not os.path.exists(di):#checks if data directory exists, creates one otherwise
             os.makedirs(di)
         fig.savefig(di + "/" + filename + ".png")
@@ -54,13 +54,13 @@ def plot_data(cleansed_file,codebook_src,results_dest):
          results_dest - destination specifying where the images need to be stored
     '''
     # Read cleansed data and codebook
-    clean_fn = "../" + cleansed_file
+    clean_fn = cleansed_file
     di = clean_fn.rsplit('/',1)[0]
     if not os.path.exists(di):#checks if data directory exists, creates one otherwise
         os.makedirs(di)
     df = pd.read_csv(clean_fn, encoding='latin-1')
 
-    code_fn = "../" + codebook_src
+    code_fn = codebook_src
     di = code_fn.rsplit('/',1)[0]
     if not os.path.exists(di): #checks if data directory exists, creates one otherwise
         os.makedirs(di)
