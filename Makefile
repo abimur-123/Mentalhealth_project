@@ -1,14 +1,8 @@
 # Driver script
 # AM Dec 2017
-# what it does
-# Cleanse and run all scripts
-# usage: make cleanse and summarise - if you use something else without specifying a rule it will throw a rule error
-
-# clean intermediate results
-clean:
-	rm -rf results/*
-	rm docs/Final_report.*
-	rm data/cleansed_data.csv
+# what it does:
+# Cleanse and run all scripts, and generate a report.
+# usage: make all OR make clean
 
 # run from top to bottom
 all: doc/Final_report.md
@@ -26,3 +20,9 @@ createplots: cleanse_and_summarise
 #make Report
 doc/Final_report.md: createplots
 	Rscript -e "ezknitr::ezknit('scripts/Final_report.Rmd', out_dir = 'docs')"
+
+# clean intermediate results
+clean:
+	rm -rf results/*
+	rm docs/Final_report.*
+	rm data/cleansed_data.csv

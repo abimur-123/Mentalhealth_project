@@ -25,33 +25,15 @@ There are multiple questions regarding company policy towards mental illness whi
 Steps to reproduce this analysis are -
 
 1. Clone the github repo or dowload files from the scripts folder to your local system.
-2. Navigate to the folder where the downloaded files are present and run the following commands in sequence:
-**Command 1**
+2. Download image from Docker
 ```
-python Data_import.py --<<URL to obtain data from>> --<<location to store raw file>>
+docker pull abimurali/mentalhealth_project
 ```
-URL I used to obtain data for this analysis is - 'https://query.data.world/s/S5I_aMQV9aJMq2_o3qMmrvOMru1Sss'
-
-The parameters are optional. If nothing is passed then the above URL is used by default and the raw data is stored in the data folder in the root directory. The only constraint is argument 2 cannot be passed without passing argument 1. This could lead to incorrect argument being picked up.
-
-This command is followed by
-**Command 2**
+3. Clean to build from scratch
 ```
-python Data_cleansing.py <<Raw file location>> <<Destination for codebook>> <<Destination for cleansed data>> <<Destination for storing string summary table>> <<Desination for storing numeric summary table>>
+docker run --rm -v <<Location where folder was cloned>>:/home/mentalhealth_project abimurali/mentalhealth_project make -C '/home/mentalhealth_project' clean
 ```
-
-These parameters are again optional, if you **did not** specify any parameters for the previous command. Default parameters are used in the absence of input parameters.
-
-Last python command -
-**Command 3**
+4. Run analysis from scratch
 ```
-python Data_eda.py <<cleansed file location>> <<codebook location>> <<destination folder for figures>>
-```
-
-The parameters in this case indicate location of cleansed file, codebook file and destination folder for saving images from analysis.The parameters are optional and default arguments are used if no arguments were specified in the previous instances.
-
-Finally to run the RMarkdown script that generates the Final report run the following command -
-**Command 4**
-```
-Rscript -e "ezknitr::ezknit('src/Final_report.Rmd', out_dir = 'doc')""
+docker run --rm -v <<Location where folder was cloned>>:/home/mentalhealth_project abimurali/mentalhealth_project make -C '/home/mentalhealth_project'
 ```
