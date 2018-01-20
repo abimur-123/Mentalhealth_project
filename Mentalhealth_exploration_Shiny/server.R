@@ -17,6 +17,9 @@ library(FactoMineR)
 library(factoextra)
 library(ggplot2)
 library(plotly)
+library(DT)
+
+df <- mtcars
 
 mh_sub <- read.csv("Cleansed.csv")
 
@@ -120,7 +123,7 @@ shinyServer(function(input, output) {
     map_codes <- left_join(map_tracks,df %>% select(state,code),by = c("US_state_work" = "state"))
     
     map_codes$code[map_codes$US_state_work == "California"] <- "CA"
-    map_codes
+    map_codes %>% arrange(code)
   })
   
   output$plotmap <- renderPlotly({
@@ -148,22 +151,63 @@ shinyServer(function(input, output) {
     plotly_build(p)
   })
   
-  output$brush <- renderPrint({
-    d <- event_data("plotly_selected")
-    if (is.null(d)) "Click and drag events (i.e., select/lasso) appear here (double-click to clear)" else (d)
+  
+  output$selection <- renderPrint({
+    d <- event_data("plotly_click")
+    row_number <- d$pointNumber
+    df <- dataMap()
+    country_ret <- df[row_number + 1,]$US_state_work
+    print(country_ret)
   })
   
+
   #Logistic model
   output$Model_map <- renderPlot({
     df <- mh_sub
     df$Mental_ill <- ifelse(df$Mental_ill == "Yes",1,0)
     # df$Org_size <- as.numeric(df$Org_size)
     
-    df %>% 
+    df %>% filter(Country == "United States of America",Age <= 75) %>% 
       ggplot(.,aes(x = Age,y = Mental_ill)) +
       geom_jitter(alpha = 0.25) +
       geom_smooth(method = "glm",method.args = list(family = binomial(link = 'logit'))) +
       labs(title = "Impact of Age on Mental illness in tech companies")
   })
   
+  url1 <- a("Open Sourcing Mental Illness Organization - Survey source", href = "https://osmihelp.org/")
+  output$OSMI <- renderUI({
+    tagList(url1)
+  })
+  
+  url2 <- a("Mental health first Aid", href = "https://www.mentalhealthfirstaid.org/")
+  output$Helpline <- renderUI({
+    tagList(url2)
+  })
+  
+  url3 <- a("Employee Guidelines book", href = "https://leanpub.com/osmi-guidelines-for-employees")
+  output$rights <- renderUI({
+    tagList(url3)
+  })
+  
+  observe(event_data("plotly_click"))
+  
+  #map to table
+  ret_Country <- reactive({
+    d <- event_data("plotly_click")
+    row_number <- d$pointNumber
+    df <- dataMap()
+    state_ret <- df[row_number + 1,]$US_state_work #increment by one as point starts at 0 index
+    state_ret  
+    })
+  
+  #data table
+  output$mytable = DT::renderDataTable(
+    mh_sub %>% filter(US_state_work %in% c(ret_Country())),
+    extensions = 'Buttons', 
+    options = list(
+      scrollX = TRUE,
+      dom = 'Bfrtip',
+      buttons = c('copy', 'csv', 'excel', 'pdf')
+    )
+  )
 })

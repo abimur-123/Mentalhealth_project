@@ -13,6 +13,7 @@ library(devtools)
 library(shinyjs)
 library(dplyr)
 library(plotly)
+library(DT)
 
 # setwd("./Github_personal/Mentalhealth_project")
 mh <- read.csv("Cleansed.csv")
@@ -66,7 +67,7 @@ sidebar_expl <- sidebarPanel(
                      label = "Size of company", 
                      choices = c("Select all",levels(mh[,"Org_size"])),
                      selected = "Select all"),
-  width = 2
+  width = 3
 )
 
 
@@ -76,19 +77,17 @@ expl_tab <- fluidPage(
   sidebarLayout(
     sidebar_expl,
     mainPanel(
-      plotlyOutput("plotmap")
-    )
+      plotlyOutput("plotmap"),
+      HTML('<br/>'),
+      DT::dataTableOutput("mytable")
+      )
   )
 )
 
 model_tab <- fluidPage(
-  titlePanel("Models"),
-  sidebarLayout(
-    sidebar_expl,
     mainPanel(
       plotOutput("Model_map")
     )
-  )
 )
 
 # tab1_inputs <- fluidPage(
@@ -150,7 +149,8 @@ model_tab <- fluidPage(
 dash_body <- dashboardBody(
   tabItems(
     tabItem(tabName = "exploration",
-            expl_tab
+            expl_tab,
+            verbatimTextOutput("selection")
     ),
     tabItem(tabName = "models",
             h2("Models"),
@@ -159,7 +159,11 @@ dash_body <- dashboardBody(
     tabItem(tabName = "data",
             h2("Data")),
     tabItem(tabName = "resources",
-            h2("Links"))
+            h2("Links"),
+            uiOutput("OSMI"),
+            uiOutput("Helpline"),
+            uiOutput("rights")
+            )
   )
 )
 # Define UI for application that draws a histogram
