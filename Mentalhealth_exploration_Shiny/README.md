@@ -1,3 +1,5 @@
+# Shiny application
+
 Link to Shiny application: https://amurali.shinyapps.io/Mentalhealth_exploration_Shiny/
 
 This application was built in course requirement for DSCI 532 - Data visualization.
