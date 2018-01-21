@@ -1,0 +1,13 @@
+name: Mentalhealth_exploration_Shiny
+title: Mentalhealth_exploration_Shiny
+username:
+account: amurali
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 258893
+bundleId: 1185303
+url: https://amurali.shinyapps.io/Mentalhealth_exploration_Shiny/
+when: 1516528196.93708
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Cleansing_code.R|Cleansing.R|.~lock.Cleansed.csv#|data/cleansed_data.csv|data/Codebook.csv|data/raw_data_2.csv|data/raw_data.csv

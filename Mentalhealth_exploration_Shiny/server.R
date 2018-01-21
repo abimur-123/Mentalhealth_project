@@ -13,13 +13,9 @@ library(shinyjs)
 library(rlang)
 library(tidyverse)
 library(stringr)
-library(FactoMineR)
-library(factoextra)
 library(ggplot2)
 library(plotly)
 library(DT)
-
-df <- mtcars
 
 mh_sub <- read.csv("Cleansed.csv")
 
@@ -35,12 +31,6 @@ shinyServer(function(input, output) {
     tech_inp = input$tech
     size_inp = input$compsize
     
-    # age <- C44
-    # company_size <- C2
-    # self_emp <- C1
-    # is_tech <- C3
-    # gender <- C45
-    # 
     df <- mh_sub %>% filter(Age >= min(age_inp) & Age <= max(age_inp))
     
     if(gender_inp != "Select all") df <- df %>% filter(Gender %in% gender_inp)
@@ -54,10 +44,12 @@ shinyServer(function(input, output) {
     df
   })
   
+  ### Sidebar
   output$menuitem <- renderMenu({
     menuItem("Menu item", icon = icon("calendar"))
   })
   
+  ### Shape data for Map
   dataMap <- reactive({
     ##Prep data
     mh_sub <- filterData()
@@ -81,7 +73,7 @@ shinyServer(function(input, output) {
                                spread(Benefits,coverage_ratio),stringsAsFactors = FALSE) #%>% View()
     
     if(length(names(map_tracks)) == 8){
-      map_tracks$hover <- with(map_tracks,paste(US_state_work,
+      map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
                                                 "Average age of respondents:",round(avg_age,2),"<br>",
                                                 "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
                                                 "% of respondents who get mental-care benefits:",round(Yes,2),"<br>",
@@ -90,7 +82,7 @@ shinyServer(function(input, output) {
       )
     }
     else if (!("No" %in% names(map_tracks))){
-    map_tracks$hover <- with(map_tracks,paste(US_state_work,
+    map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
                                               "Average age of respondents:",round(avg_age,2),"<br>",
                                               "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
                                               "% of respondents who get mental-care benefits:",round(Yes,2),"<br>",
@@ -99,7 +91,7 @@ shinyServer(function(input, output) {
     )
     }
     else if (!("Yes" %in% names(map_tracks))){
-      map_tracks$hover <- with(map_tracks,paste(US_state_work,
+      map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
                                                 "Average age of respondents:",round(avg_age,2),"<br>",
                                                 "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
                                                 "% of respondents who get mental-care benefits:",NA,"<br>",
@@ -108,7 +100,7 @@ shinyServer(function(input, output) {
       )
     }
     else{
-      map_tracks$hover <- with(map_tracks,paste(US_state_work,
+      map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
                                                 "Average age of respondents:",round(avg_age,2),"<br>",
                                                 "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
                                                 "% of respondents who get mental-care benefits:",round(Yes,2),"<br>",
@@ -125,7 +117,8 @@ shinyServer(function(input, output) {
     map_codes$code[map_codes$US_state_work == "California"] <- "CA"
     map_codes %>% arrange(code)
   })
-  
+ 
+  ### Render map 
   output$plotmap <- renderPlotly({
     
     l <- list(color = toRGB("white"), width = 2)
@@ -144,7 +137,7 @@ shinyServer(function(input, output) {
       ) %>%
       colorbar(title = "Responses") %>%
       layout(
-        title = 'OSMI mental health survey',
+        title = 'Analysis by State',
         geo = g,
         dragmode = "select"
       )
@@ -152,16 +145,17 @@ shinyServer(function(input, output) {
   })
   
   
-  output$selection <- renderPrint({
-    d <- event_data("plotly_click")
-    row_number <- d$pointNumber
-    df <- dataMap()
-    country_ret <- df[row_number + 1,]$US_state_work
-    print(country_ret)
-  })
+  ##Debug plotly event
+  # output$selection <- renderPrint({
+  #   d <- event_data("plotly_click")
+  #   row_number <- d$pointNumber
+  #   df <- dataMap()
+  #   country_ret <- df[row_number + 1,]$US_state_work
+  #   print(country_ret)
+  # })
   
 
-  #Logistic model
+  ### Logistic model
   output$Model_map <- renderPlot({
     df <- mh_sub
     df$Mental_ill <- ifelse(df$Mental_ill == "Yes",1,0)
@@ -174,6 +168,21 @@ shinyServer(function(input, output) {
       labs(title = "Impact of Age on Mental illness in tech companies")
   })
   
+  ### Model summary
+  output$model_output <- renderPrint({
+    df <- mh_sub
+    df$Mental_ill <- ifelse(df$Mental_ill == "Yes",1,0)
+    # df$Org_size <- as.numeric(df$Org_size)
+    
+    log_glm <- df %>% filter(Country == "United States of America",Age <= 75) %>% 
+    glm(Mental_ill~Age,data = .,family = binomial(link = "logit"))
+    
+    x <- 0.00346
+    print(summary(log_glm))
+    paste("Odds of suffering from mental illness as age increases:",round(exp(x)/(1 + exp(x)),2))
+  })
+ 
+  ### Resources page
   url1 <- a("Open Sourcing Mental Illness Organization - Survey source", href = "https://osmihelp.org/")
   output$OSMI <- renderUI({
     tagList(url1)
@@ -189,9 +198,7 @@ shinyServer(function(input, output) {
     tagList(url3)
   })
   
-  observe(event_data("plotly_click"))
-  
-  #map to table
+  ### map to table
   ret_Country <- reactive({
     d <- event_data("plotly_click")
     row_number <- d$pointNumber
@@ -200,7 +207,7 @@ shinyServer(function(input, output) {
     state_ret  
     })
   
-  #data table
+  ### data table
   output$mytable = DT::renderDataTable(
     mh_sub %>% filter(US_state_work %in% c(ret_Country())),
     extensions = 'Buttons', 
