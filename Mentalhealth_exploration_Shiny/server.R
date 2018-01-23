@@ -31,7 +31,8 @@ shinyServer(function(input, output) {
     tech_inp = input$tech
     size_inp = input$compsize
     
-    df <- mh_sub %>% filter(Age >= min(age_inp) & Age <= max(age_inp))
+    #Remove empty benefits rows. Hard to impute data for now.
+    df <- mh_sub %>% filter(Age >= min(age_inp) & Age <= max(age_inp),Benefits != '')
     
     if(gender_inp != "Select all") df <- df %>% filter(Gender %in% gender_inp)
     
@@ -143,17 +144,6 @@ shinyServer(function(input, output) {
       )
     plotly_build(p)
   })
-  
-  
-  ##Debug plotly event
-  # output$selection <- renderPrint({
-  #   d <- event_data("plotly_click")
-  #   row_number <- d$pointNumber
-  #   df <- dataMap()
-  #   country_ret <- df[row_number + 1,]$US_state_work
-  #   print(country_ret)
-  # })
-  
 
   ### Logistic model
   output$Model_map <- renderPlot({
@@ -209,12 +199,14 @@ shinyServer(function(input, output) {
   
   ### data table
   output$mytable = DT::renderDataTable(
-    mh_sub %>% 
+    filterData() %>% 
       filter(US_state_work %in% c(ret_Country())) %>% 
       select(
              "Size of organization" = Org_size,
              "Diagnosed with Mental illness?" = Mental_ill,
              "Works in tech?" = Is_tech,
+             "Gender" = Gender,
+             "Age of respondent" = Age,
              "Receives benefit for mental illness" = Benefits,
              "Is anonymity protected after disclosing mental illness?" = Anonymity,
              "Comfortable discussing with co-workers" = Coworkers,

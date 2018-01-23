@@ -42,7 +42,7 @@ dash_sidebar <- dashboardSidebar(
 
 #Exploration page sidebar
 sidebar_expl <- sidebarPanel(
-  h5("Note: Filters data on the map alone"),
+  h5("Note: Filters affect data on the map as well as table"),
   sliderInput(inputId = "age",
               label = "Age:",
               min = 15,
