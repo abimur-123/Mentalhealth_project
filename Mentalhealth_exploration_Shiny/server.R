@@ -35,7 +35,7 @@ shinyServer(function(input, output) {
     
     if(gender_inp != "Select all") df <- df %>% filter(Gender %in% gender_inp)
     
-    if(self_inp != "Select all") df <- df %>% filter(Self_employed %in% self_inp)
+    if(self_inp != "Select all") df <- df %>% filter(Mental_ill == self_inp)
     
     if(tech_inp != "Select all") df <- df %>% filter(Is_tech %in% tech_inp)
     
@@ -179,7 +179,7 @@ shinyServer(function(input, output) {
     
     x <- 0.00346
     print(summary(log_glm))
-    paste("Odds of suffering from mental illness as age increases:",round(exp(x)/(1 + exp(x)),2))
+    paste("Odds of suffering from mental illness for unit increase in age:",round(exp(x)/(1 + exp(x)),2))
   })
  
   ### Resources page
@@ -209,7 +209,18 @@ shinyServer(function(input, output) {
   
   ### data table
   output$mytable = DT::renderDataTable(
-    mh_sub %>% filter(US_state_work %in% c(ret_Country())),
+    mh_sub %>% 
+      filter(US_state_work %in% c(ret_Country())) %>% 
+      select(
+             "Size of organization" = Org_size,
+             "Diagnosed with Mental illness?" = Mental_ill,
+             "Works in tech?" = Is_tech,
+             "Receives benefit for mental illness" = Benefits,
+             "Is anonymity protected after disclosing mental illness?" = Anonymity,
+             "Comfortable discussing with co-workers" = Coworkers,
+             "Company pays equal importance to mental and physical?" = Ment_phy,
+             "State of work" = US_state_work
+             ),
     extensions = 'Buttons', 
     options = list(
       scrollX = TRUE,

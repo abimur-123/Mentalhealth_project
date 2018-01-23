@@ -22,6 +22,8 @@ mh$Org_size[mh$Org_size == ""] <-  "Missing"
 mh[,"Org_size"] <- as.factor(mh[,"Org_size"]) %>% 
   forcats::fct_relevel("1-5","6-25","26-100","100-500","500-1000","More than 1000","Missing")
 
+mh[,"Gender"] <- as.factor(mh[,"Gender"])
+
 #Dashboard Header
 dash_header <- dashboardHeader(
   title = "OSMI mental health survey in Tech Exploration - 2016"
@@ -40,6 +42,7 @@ dash_sidebar <- dashboardSidebar(
 
 #Exploration page sidebar
 sidebar_expl <- sidebarPanel(
+  h5("Note: Filters data on the map alone"),
   sliderInput(inputId = "age",
               label = "Age:",
               min = 15,
@@ -50,9 +53,9 @@ sidebar_expl <- sidebarPanel(
               choices = c("Select all",levels(mh[,"Gender"])),
               selected = "Select all"),
   # Input: dropdown for self-employed----
-  selectInput(inputId = "Self_employed", 
-              label = "Self-employed?",
-              choices = c("Select all", 
+  selectInput(inputId = "Self_employed",
+              label = "Diagnosed with mentall illness",
+              choices = c("Select all",
                           "Yes",
                           "No"),
               selected = "Select all"),
@@ -76,6 +79,7 @@ expl_tab <- fluidPage(
   sidebarLayout(
     sidebar_expl,
     mainPanel(
+      h4("Click on state in the map to view detailed data in the table below"),
       plotlyOutput("plotmap"),
       HTML('<br/>'),
       h2("Data Table"),
@@ -87,6 +91,8 @@ expl_tab <- fluidPage(
 #Logistic model
 model_tab <- fluidPage(
     mainPanel(
+      h4("Does age of respondent in the US have any effect on their mental state?"),
+      h5("Note: 1- people who have been diagnosed with mentall illness and 0 -people who haven't been diagnosed"),
       plotOutput("Model_map")
     )
 )
