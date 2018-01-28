@@ -24,6 +24,9 @@ mh[,"Org_size"] <- as.factor(mh[,"Org_size"]) %>%
 
 mh[,"Gender"] <- as.factor(mh[,"Gender"])
 
+Org_size <- levels(mh[,"Org_size"])
+Org_size <- Org_size[-length(Org_size)]
+
 #Dashboard Header
 dash_header <- dashboardHeader(
   title = "OSMI mental health survey in Tech Exploration - 2016"
@@ -31,6 +34,11 @@ dash_header <- dashboardHeader(
 
 #Dashbord sidebar
 dash_sidebar <- dashboardSidebar(
+  tags$head(tags$style(HTML('
+      .skin-red .left-side, .skin-red .main-sidebar, .skin-red .wrapper{
+                            background-color: #696969;
+                            }
+                            '))),
   width = 150,
   sidebarMenu(id = "sidebarmenu",
     menuItem("Exploration", tabName = "exploration", icon =  icon("bar-chart-o")),
@@ -68,21 +76,14 @@ sidebar_expl <- sidebarPanel(
                selected = c("Select all")),
   checkboxGroupInput("compsize", 
                      label = "Size of company", 
-                     choices = c("Select all",levels(mh[,"Org_size"])),
-                     selected = "Select all"),
+                     choices = c(Org_size),
+                     selected = c(Org_size)),
   width = 3
 )
 
 
 #Exploration page layout
 expl_tab <- fluidPage(
-  tags$head(tags$style(
-    HTML('
-          .skin-red .wrapper {
-              background-color: #C0C0C0;
-          }
-        ')
-  )),
   titlePanel("Survey response in the US"),
   sidebarLayout(
     sidebar_expl,
@@ -108,6 +109,7 @@ model_tab <- fluidPage(
 
 # Dashboard body
 dash_body <- dashboardBody(
+
   tabItems(
     tabItem(tabName = "exploration",
             expl_tab

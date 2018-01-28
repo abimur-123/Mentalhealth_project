@@ -140,7 +140,9 @@ shinyServer(function(input, output) {
       layout(
         title = 'Analysis by State',
         geo = g,
-        dragmode = "select"
+        dragmode = "select",
+        yaxis=list(fixedrange=TRUE),
+        xaxis=list(fixedrange=TRUE)
       )
     plotly_build(p)
   })

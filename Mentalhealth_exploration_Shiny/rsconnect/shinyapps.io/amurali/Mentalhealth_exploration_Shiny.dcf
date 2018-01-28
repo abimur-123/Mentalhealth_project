@@ -5,9 +5,9 @@ account: amurali
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 258893
-bundleId: 1189453
+bundleId: 1196257
 url: https://amurali.shinyapps.io/Mentalhealth_exploration_Shiny/
-when: 1516738919.70524
+when: 1517124825.67372
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: Cleansing_code.R|Cleansing.R|.~lock.Cleansed.csv#|data/cleansed_data.csv|data/Codebook.csv|data/raw_data_2.csv|data/raw_data.csv
+ignoredFiles: Cleansing_code.R|Cleansing.R|.~lock.Cleansed.csv#|README.md|data/cleansed_data.csv|data/Codebook.csv|data/raw_data_2.csv|data/raw_data.csv
