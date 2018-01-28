@@ -42,6 +42,7 @@ dash_sidebar <- dashboardSidebar(
 
 #Exploration page sidebar
 sidebar_expl <- sidebarPanel(
+  
   h5("Note: Filters affect data on the map as well as table"),
   sliderInput(inputId = "age",
               label = "Age:",
@@ -75,11 +76,18 @@ sidebar_expl <- sidebarPanel(
 
 #Exploration page layout
 expl_tab <- fluidPage(
+  tags$head(tags$style(
+    HTML('
+          .skin-red .wrapper {
+              background-color: #C0C0C0;
+          }
+        ')
+  )),
   titlePanel("Survey response in the US"),
   sidebarLayout(
     sidebar_expl,
     mainPanel(
-      h4("Click on state in the map to view detailed data in the table below"),
+      h2("Click on state in the map to view detailed data in the table below"),
       plotlyOutput("plotmap"),
       HTML('<br/>'),
       h2("Data Table"),
@@ -93,6 +101,7 @@ model_tab <- fluidPage(
     mainPanel(
       h4("Does age of respondent in the US have any effect on their mental state?"),
       h5("Note: 1- people who have been diagnosed with mentall illness and 0 -people who haven't been diagnosed"),
+      h5("Filters from previous page are not carried over. This is a static graph."),
       plotOutput("Model_map")
     )
 )
@@ -106,6 +115,7 @@ dash_body <- dashboardBody(
     tabItem(tabName = "models",
             h2("Models"),
             model_tab,
+            h4("Summary of the results"),
             verbatimTextOutput("model_output")
     ),
     # tabItem(tabName = "data",
