@@ -15,7 +15,7 @@ library(dplyr)
 library(plotly)
 library(DT)
 
-mh <- read.csv("Cleansed.csv",stringsAsFactors = FALSE)
+mh <- read.csv("./data/Cleansed.csv",stringsAsFactors = FALSE)
 
 mh$Org_size[mh$Org_size == ""] <-  "Missing"
 
@@ -29,7 +29,7 @@ Org_size <- Org_size[-length(Org_size)]
 
 #Dashboard Header
 dash_header <- dashboardHeader(
-  title = "OSMI mental health survey in Tech Exploration - 2016"
+  title = "Mental health survey"
 )
 
 #Dashbord sidebar
@@ -84,11 +84,11 @@ sidebar_expl <- sidebarPanel(
 
 #Exploration page layout
 expl_tab <- fluidPage(
-  titlePanel("Survey response in the US"),
+  titlePanel("Survey response in the US from 2016"),
   sidebarLayout(
     sidebar_expl,
     mainPanel(
-      h2("Click on state in the map to view detailed data in the table below"),
+      h4("Click on state in the map to view detailed data in the table below. Hover over state to view more information"),
       plotlyOutput("plotmap"),
       HTML('<br/>'),
       h2("Data Table"),

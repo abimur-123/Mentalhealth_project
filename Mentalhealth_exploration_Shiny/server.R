@@ -17,7 +17,7 @@ library(ggplot2)
 library(plotly)
 library(DT)
 
-mh_sub <- read.csv("Cleansed.csv")
+mh_sub <- read.csv("./data/Cleansed.csv")
 
 # write.csv(mh_sub,"Cleansed.csv",row.names = FALSE)
 
@@ -31,6 +31,10 @@ shinyServer(function(input, output) {
     tech_inp = input$tech
     size_inp = input$compsize
     
+    validate(
+      need(input$compsize, 'Select at least one organization size!')
+    )
+    
     #Remove empty benefits rows. Hard to impute data for now.
     df <- mh_sub %>% filter(Age >= min(age_inp) & Age <= max(age_inp),Benefits != '')
     
@@ -40,9 +44,13 @@ shinyServer(function(input, output) {
     
     if(tech_inp != "Select all") df <- df %>% filter(Is_tech %in% tech_inp)
     
-    if(size_inp != "Select all") df <- df %>% filter(Org_size %in% size_inp)
-    
-    df
+    if(!is.null(size_inp)) {
+      df <- df %>% filter(Org_size %in% size_inp)
+      df
+    }
+    else{
+      print("Please select Organization size")
+    }
   })
   
   ### Sidebar
@@ -53,70 +61,74 @@ shinyServer(function(input, output) {
   ### Shape data for Map
   dataMap <- reactive({
     ##Prep data
-    mh_sub <- filterData()
-    #Does.your.employer.provide.mental.health.benefits.as.part.of.healthcare.coverage. C5
-    cov <- mh_sub %>% filter(Benefits != '',Country == 'United States of America') %>% 
-      select(US_state_work,Benefits,Age) %>% 
-      group_by(US_state_work,Benefits) %>% 
-      summarise(n = n(),age = sum(Age)) %>% 
-      mutate(coverage_ratio = n/sum(n) * 100,responses = sum(n),avg_age = sum(age)/sum(n)) %>% 
-      arrange(US_state_work) #%>% View()
-    
-    #Have.you.been.diagnosed.with.a.mental.health.condition.by.a.medical.professional. C39
-    m_ill <- mh_sub %>% filter(Country == 'United States of America') %>%  
-      group_by(US_state_work,Mental_ill) %>% 
-      summarise(n = n()) %>% 
-      mutate(ill_ratio = n/sum(n) * 100) %>% 
-      filter(Mental_ill == "Yes") #%>% View()
-    
-    map_tracks <- data.frame(left_join(cov,m_ill,by = "US_state_work") %>%
-                               select(-c(n.x,n.y,age,Mental_ill)) %>% 
-                               spread(Benefits,coverage_ratio),stringsAsFactors = FALSE) #%>% View()
-    
-    if(length(names(map_tracks)) == 8){
-      map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
-                                                "Average age of respondents:",round(avg_age,2),"<br>",
-                                                "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
-                                                "% of respondents who get mental-care benefits:",round(Yes,2),"<br>",
-                                                "% of respondents who aren't aware of the benefits:",round(`I.don.t.know`,2),"<br>",
-                                                "% of respondents who do not get benefits:",round(No,2))
-      )
-    }
-    else if (!("No" %in% names(map_tracks))){
-    map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
-                                              "Average age of respondents:",round(avg_age,2),"<br>",
-                                              "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
-                                              "% of respondents who get mental-care benefits:",round(Yes,2),"<br>",
-                                              "% of respondents who aren't aware of the benefits:",round(`I.don.t.know`,2),"<br>",
-                                              "% of respondents who do not get benefits:",NA)
+    validate(
+      need(input$compsize, 'Select at least one organization size!')
     )
-    }
-    else if (!("Yes" %in% names(map_tracks))){
-      map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
-                                                "Average age of respondents:",round(avg_age,2),"<br>",
-                                                "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
-                                                "% of respondents who get mental-care benefits:",NA,"<br>",
-                                                "% of respondents who aren't aware of the benefits:",round(`I.don.t.know`,2),"<br>",
-                                                "% of respondents who do not get benefits:",round(No,2))
-      )
-    }
-    else{
-      map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
-                                                "Average age of respondents:",round(avg_age,2),"<br>",
-                                                "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
-                                                "% of respondents who get mental-care benefits:",round(Yes,2),"<br>",
-                                                "% of respondents who aren't aware of the benefits:",NA, "<br>",
-                                                "% of respondents who do not get benefits:",round(No,2))
-      )
-    }
-    
-    df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv",stringsAsFactors=FALSE)
-    df <- rbind(df,c("DC","District of Columbia"))
-    
-    map_codes <- left_join(map_tracks,df %>% select(state,code),by = c("US_state_work" = "state"))
-    
-    map_codes$code[map_codes$US_state_work == "California"] <- "CA"
-    map_codes %>% arrange(code)
+      mh_sub <- filterData()
+      #Does.your.employer.provide.mental.health.benefits.as.part.of.healthcare.coverage. C5
+      cov <- mh_sub %>% filter(Benefits != '',Country == 'United States of America') %>% 
+        select(US_state_work,Benefits,Age) %>% 
+        group_by(US_state_work,Benefits) %>% 
+        summarise(n = n(),age = sum(Age)) %>% 
+        mutate(coverage_ratio = n/sum(n) * 100,responses = sum(n),avg_age = sum(age)/sum(n)) %>% 
+        arrange(US_state_work) #%>% View()
+      
+      #Have.you.been.diagnosed.with.a.mental.health.condition.by.a.medical.professional. C39
+      m_ill <- mh_sub %>% filter(Country == 'United States of America') %>%  
+        group_by(US_state_work,Mental_ill) %>% 
+        summarise(n = n()) %>% 
+        mutate(ill_ratio = n/sum(n) * 100) %>% 
+        filter(Mental_ill == "Yes") #%>% View()
+      
+      map_tracks <- data.frame(left_join(cov,m_ill,by = "US_state_work") %>%
+                                 select(-c(n.x,n.y,age,Mental_ill)) %>% 
+                                 spread(Benefits,coverage_ratio),stringsAsFactors = FALSE) #%>% View()
+      
+      if(length(names(map_tracks)) == 8){
+        map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
+                                                  "Average age of respondents:",round(avg_age,2),"<br>",
+                                                  "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
+                                                  "% of respondents who get mental-care benefits:",round(Yes,2),"<br>",
+                                                  "% of respondents who aren't aware of the benefits:",round(`I.don.t.know`,2),"<br>",
+                                                  "% of respondents who do not get benefits:",round(No,2))
+        )
+      }
+      else if (!("No" %in% names(map_tracks))){
+        map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
+                                                  "Average age of respondents:",round(avg_age,2),"<br>",
+                                                  "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
+                                                  "% of respondents who get mental-care benefits:",round(Yes,2),"<br>",
+                                                  "% of respondents who aren't aware of the benefits:",round(`I.don.t.know`,2),"<br>",
+                                                  "% of respondents who do not get benefits:",NA)
+        )
+      }
+      else if (!("Yes" %in% names(map_tracks))){
+        map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
+                                                  "Average age of respondents:",round(avg_age,2),"<br>",
+                                                  "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
+                                                  "% of respondents who get mental-care benefits:",NA,"<br>",
+                                                  "% of respondents who aren't aware of the benefits:",round(`I.don.t.know`,2),"<br>",
+                                                  "% of respondents who do not get benefits:",round(No,2))
+        )
+      }
+      else{
+        map_tracks$hover <- with(map_tracks,paste(US_state_work,"<br>",
+                                                  "Average age of respondents:",round(avg_age,2),"<br>",
+                                                  "% of people diagnosed with mental illness:",round(ill_ratio,2),"<br>",
+                                                  "% of respondents who get mental-care benefits:",round(Yes,2),"<br>",
+                                                  "% of respondents who aren't aware of the benefits:",NA, "<br>",
+                                                  "% of respondents who do not get benefits:",round(No,2))
+        )
+      }
+      
+      df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv",stringsAsFactors=FALSE)
+      df <- rbind(df,c("DC","District of Columbia"))
+      
+      map_codes <- left_join(map_tracks,df %>% select(state,code),by = c("US_state_work" = "state"))
+      
+      map_codes$code[map_codes$US_state_work == "California"] <- "CA"
+      map_codes %>% arrange(code)  
+
   })
  
   ### Render map 
@@ -138,7 +150,7 @@ shinyServer(function(input, output) {
       ) %>%
       colorbar(title = "Responses") %>%
       layout(
-        title = 'Analysis by State',
+        title = ' ',
         geo = g,
         dragmode = "select",
         yaxis=list(fixedrange=TRUE),
@@ -204,6 +216,7 @@ shinyServer(function(input, output) {
     filterData() %>% 
       filter(US_state_work %in% c(ret_Country())) %>% 
       select(
+             "State of work" = US_state_work,
              "Size of organization" = Org_size,
              "Diagnosed with Mental illness?" = Mental_ill,
              "Works in tech?" = Is_tech,
@@ -212,8 +225,7 @@ shinyServer(function(input, output) {
              "Receives benefit for mental illness" = Benefits,
              "Is anonymity protected after disclosing mental illness?" = Anonymity,
              "Comfortable discussing with co-workers" = Coworkers,
-             "Company pays equal importance to mental and physical?" = Ment_phy,
-             "State of work" = US_state_work
+             "Company pays equal importance to mental and physical?" = Ment_phy
              ),
     extensions = 'Buttons', 
     options = list(

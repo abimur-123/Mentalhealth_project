@@ -1,65 +1,52 @@
-Old_names,New_names
-Unnamed: 0,C1
-Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?,C10
-"If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:",C11
-Do you think that discussing a mental health disorder with your employer would have negative consequences?,C12
-Do you think that discussing a physical health issue with your employer would have negative consequences?,C13
-Would you feel comfortable discussing a mental health disorder with your coworkers?,C14
-Would you feel comfortable discussing a mental health disorder with your direct supervisor(s)?,C15
-Do you feel that your employer takes mental health as seriously as physical health?,C16
-Have you heard of or observed negative consequences for co-workers who have been open about mental health issues in your workplace?,C17
-Do you have medical coverage (private insurance or state-provided) which includes treatment of  mental health issues?,C18
-Do you know local or online resources to seek help for a mental health disorder?,C19
-Are you self-employed?,C2
-"If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to clients or business contacts?",C20
-"If you have revealed a mental health issue to a client or business contact, do you believe this has impacted you negatively?",C21
-"If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to coworkers or employees?",C22
-"If you have revealed a mental health issue to a coworker or employee, do you believe this has impacted you negatively?",C23
-Do you believe your productivity is ever affected by a mental health issue?,C24
-"If yes, what percentage of your work time (time performing primary or secondary job functions) is affected by a mental health issue?",C25
-Do you have previous employers?,C26
-Have your previous employers provided mental health benefits?,C27
-Were you aware of the options for mental health care provided by your previous employers?,C28
-Did your previous employers ever formally discuss mental health (as part of a wellness campaign or other official communication)?,C29
-How many employees does your company or organization have?,C3
-Did your previous employers provide resources to learn more about mental health issues and how to seek help?,C30
-Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers?,C31
-Do you think that discussing a mental health disorder with previous employers would have negative consequences?,C32
-Do you think that discussing a physical health issue with previous employers would have negative consequences?,C33
-Would you have been willing to discuss a mental health issue with your previous co-workers?,C34
-Would you have been willing to discuss a mental health issue with your direct supervisor(s)?,C35
-Did you feel that your previous employers took mental health as seriously as physical health?,C36
-Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?,C37
-Would you be willing to bring up a physical health issue with a potential employer in an interview?,C38
-Why or why not?,C39
-Is your employer primarily a tech company/organization?,C4
-Would you bring up a mental health issue with a potential employer in an interview?,C40
-Why or why not?.1,C41
-Do you feel that being identified as a person with a mental health issue would hurt your career?,C42
-Do you think that team members/co-workers would view you more negatively if they knew you suffered from a mental health issue?,C43
-How willing would you be to share with friends and family that you have a mental illness?,C44
-Have you observed or experienced an unsupportive or badly handled response to a mental health issue in your current or previous workplace?,C45
-Have your observations of how another individual who discussed a mental health disorder made you less likely to reveal a mental health issue yourself in your current workplace?,C46
-Do you have a family history of mental illness?,C47
-Have you had a mental health disorder in the past?,C48
-Do you currently have a mental health disorder?,C49
-Is your primary role within your company related to tech/IT?,C5
-"If yes, what condition(s) have you been diagnosed with?",C50
-"If maybe, what condition(s) do you believe you have?",C51
-Have you been diagnosed with a mental health condition by a medical professional?,C52
-"If so, what condition(s) were you diagnosed with?",C53
-Have you ever sought treatment for a mental health issue from a mental health professional?,C54
-"If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?",C55
-"If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?",C56
-What is your age?,C57
-What is your gender?,C58
-What country do you live in?,C59
-Does your employer provide mental health benefits as part of healthcare coverage?,C6
-What US state or territory do you live in?,C60
-What country do you work in?,C61
-What US state or territory do you work in?,C62
-Which of the following best describes your work position?,C63
-Do you work remotely?,C64
-Do you know the options for mental health care available under your employer-provided coverage?,C7
-"Has your employer ever formally discussed mental health (for example, as part of a wellness campaign or other official communication)?",C8
-Does your employer offer resources to learn more about mental health concerns and options for seeking help?,C9
+"","new_names","old_names"
+"1","C1","Are.you.self.employed."
+"2","C2","Does.your.employer.offer.resources.to.learn.more.about.mental.health.concerns.and.options.for.seeking.help."
+"3","C3","Does.your.employer.provide.mental.health.benefits.as.part.of.healthcare.coverage."
+"4","C4","Do.you.believe.your.productivity.is.ever.affected.by.a.mental.health.issue."
+"5","C5","Do.you.currently.have.a.mental.health.disorder."
+"6","C6","Do.you.feel.that.being.identified.as.a.person.with.a.mental.health.issue.would.hurt.your.career."
+"7","C7","Do.you.feel.that.your.employer.takes.mental.health.as.seriously.as.physical.health."
+"8","C8","Do.you.have.a.family.history.of.mental.illness."
+"9","C9","Do.you.have.medical.coverage..private.insurance.or.state.provided..which.includes.treatment.of..mental.health.issues."
+"10","C10","Do.you.know.local.or.online.resources.to.seek.help.for.a.mental.health.disorder."
+"11","C11","Do.you.know.the.options.for.mental.health.care.available.under.your.employer.provided.coverage."
+"12","C12","Do.you.think.that.discussing.a.mental.health.disorder.with.your.employer.would.have.negative.consequences."
+"13","C13","Do.you.think.that.discussing.a.physical.health.issue.with.your.employer.would.have.negative.consequences."
+"14","C14","Do.you.think.that.team.members.co.workers.would.view.you.more.negatively.if.they.knew.you.suffered.from.a.mental.health.issue."
+"15","C15","Do.you.work.remotely."
+"16","C16","Has.your.employer.ever.formally.discussed.mental.health..for.example..as.part.of.a.wellness.campaign.or.other.official.communication.."
+"17","C17","Have.you.been.diagnosed.with.a.mental.health.condition.by.a.medical.professional."
+"18","C18","Have.you.ever.sought.treatment.for.a.mental.health.issue.from.a.mental.health.professional."
+"19","C19","Have.you.had.a.mental.health.disorder.in.the.past."
+"20","C20","Have.you.heard.of.or.observed.negative.consequences.for.co.workers.who.have.been.open.about.mental.health.issues.in.your.workplace."
+"21","C21","Have.your.observations.of.how.another.individual.who.discussed.a.mental.health.disorder.made.you.less.likely.to.reveal.a.mental.health.issue.yourself.in.your.current.workplace."
+"22","C22","How.many.employees.does.your.company.or.organization.have."
+"23","C23","How.willing.would.you.be.to.share.with.friends.and.family.that.you.have.a.mental.illness."
+"24","C24","If.a.mental.health.issue.prompted.you.to.request.a.medical.leave.from.work..asking.for.that.leave.would.be."
+"25","C25","If.maybe..what.condition.s..do.you.believe.you.have."
+"26","C26","If.so..what.condition.s..were.you.diagnosed.with."
+"27","C27","If.yes..what.condition.s..have.you.been.diagnosed.with."
+"28","C28","If.yes..what.percentage.of.your.work.time..time.performing.primary.or.secondary.job.functions..is.affected.by.a.mental.health.issue."
+"29","C29","If.you.have.a.mental.health.issue..do.you.feel.that.it.interferes.with.your.work.when.being.treated.effectively."
+"30","C30","If.you.have.a.mental.health.issue..do.you.feel.that.it.interferes.with.your.work.when.NOT.being.treated.effectively."
+"31","C31","If.you.have.been.diagnosed.or.treated.for.a.mental.health.disorder..do.you.ever.reveal.this.to.clients.or.business.contacts."
+"32","C32","If.you.have.been.diagnosed.or.treated.for.a.mental.health.disorder..do.you.ever.reveal.this.to.coworkers.or.employees."
+"33","C33","If.you.have.revealed.a.mental.health.issue.to.a.client.or.business.contact..do.you.believe.this.has.impacted.you.negatively."
+"34","C34","If.you.have.revealed.a.mental.health.issue.to.a.coworker.or.employee..do.you.believe.this.has.impacted.you.negatively."
+"35","C35","Is.your.anonymity.protected.if.you.choose.to.take.advantage.of.mental.health.or.substance.abuse.treatment.resources.provided.by.your.employer."
+"36","C36","Is.your.employer.primarily.a.tech.company.organization."
+"37","C37","Is.your.primary.role.within.your.company.related.to.tech.IT."
+"38","C38","What.country.do.you.live.in."
+"39","C39","What.country.do.you.work.in."
+"40","C40","What.is.your.age."
+"41","C41","What.is.your.gender."
+"42","C42","What.US.state.or.territory.do.you.live.in."
+"43","C43","What.US.state.or.territory.do.you.work.in."
+"44","C44","Which.of.the.following.best.describes.your.work.position."
+"45","C45","Why.or.why.not."
+"46","C46","Why.or.why.not..1"
+"47","C47","Would.you.be.willing.to.bring.up.a.physical.health.issue.with.a.potential.employer.in.an.interview."
+"48","C48","Would.you.bring.up.a.mental.health.issue.with.a.potential.employer.in.an.interview."
+"49","C49","Would.you.feel.comfortable.discussing.a.mental.health.disorder.with.your.coworkers."
+"50","C50","Would.you.feel.comfortable.discussing.a.mental.health.disorder.with.your.direct.supervisor.s.."
+"51","C51","Would.you.have.been.willing.to.discuss.a.mental.health.issue.with.your.direct.supervisor.s.."

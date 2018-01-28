@@ -1,8 +1,10 @@
 ##Cleansing....
+library(dplyr)
+
 raw <- read.csv("./data/raw_data_2.csv",stringsAsFactors = FALSE)
 rem_prev <- raw[,!grepl("previous", colnames(raw))]
 write.table(data.frame(new_names = paste0("C",1:length(colnames(rem_prev))),old_names = sort(colnames(rem_prev))),
-            file = "Codebook.csv",sep = ",",col.names = NA)
+            file = "./data/Codebook.csv",sep = ",",col.names = NA)
 
 # View(raw)
 colnames(rem_prev)[colnames(rem_prev) == "Are.you.self.employed."] <- "Self_employed"
@@ -19,11 +21,12 @@ colnames(rem_prev)[colnames(rem_prev) == "What.US.state.or.territory.do.you.live
 colnames(rem_prev)[colnames(rem_prev) == "What.country.do.you.work.in."] <- "Country"
 colnames(rem_prev)[colnames(rem_prev) == "What.US.state.or.territory.do.you.work.in."] <- "US_state_work"
 colnames(rem_prev)[colnames(rem_prev) == "Have.you.been.diagnosed.with.a.mental.health.condition.by.a.medical.professional."] <- "Mental_ill"
+colnames(rem_prev)[colnames(rem_prev) == "If.yes..what.condition.s..have.you.been.diagnosed.with."] <- "Mental_cond"
 
-mh_sub <- rem_prev
+# mh_sub <- rem_prev
 
 #Replace NA in Is your company tech with 1
-mh_sub$Is_tech[is.na(mh_sub$Is_tech)] <- "Yes"
+rem_prev$Is_tech[is.na(mh_sub$Is_tech)] <- "Yes"
 
 # View(rem_prev)
 
@@ -40,7 +43,9 @@ mh_sub <- rem_prev %>% select(c(Self_employed,
                                 Gender,
                                 US_state,
                                 Country,
-                                US_state_work))
+                                US_state_work,
+                                Mental_cond
+                                ))
 
 # View(mh_sub)
 
@@ -70,3 +75,4 @@ mh_sub$Gender[mh_sub$Gender %in% c('Bigender', 'non-binary,', 'Genderfluid (born
                                     'Male/genderqueer', 'Nonbinary', 'Other', 'none of your business',
                                    'Unicorn', 'human', 'Genderqueer','non-binary')] <- "Others"
 
+write.csv(mh_sub,"./data/Cleansed.csv")
