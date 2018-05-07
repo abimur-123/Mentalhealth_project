@@ -29,7 +29,7 @@ I have organized the application into 3 tabs -
 2. Models
 3. Resources
 
-#####1. Exploration Tab
+##### 1. Exploration Tab
 ![](Exploration.png)
 
 The map is the centrepiece of this tab. It allows user(Rachel in this case) slice the data by various parameters and views the results of the survey by state. I've chosen to display pivotal information on the tooltips of the map(% of companies offering benefits, %of mental illness..). This should give the user a good idea about the situation across various states.
@@ -40,7 +40,7 @@ The user also has the ability to view data for a state in the form of a table by
 
 The user can choose to export this data into one of the following file formats as well - `CSV, Excel or PDF`
 
-#####2. Models Tab
+##### 2. Models Tab
 
 ![](Models.png)
 
@@ -48,7 +48,7 @@ This tab explores the relationship between age of respondents in the US and thei
 
 The results show that age does not play a significant role in determining the mental health of the survey respondent.
 
-#####3. Resources tab
+##### 3. Resources tab
 
 ![](Resources.png)
 
