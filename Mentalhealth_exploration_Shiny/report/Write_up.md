@@ -1,6 +1,6 @@
 # Milestone 2
 
-## Topic: Mental health project
+## Mock topic: Mental health project
 
 My initial mockup of for the project focused on helping Rachel decide an ideal destination to apply for a web development role. For this project, I will only be focusing on states in the US although there is data for other countries such as UK and Canada. The one thing that was lacking in the mockup was the absence of filters to slice the information.
 
